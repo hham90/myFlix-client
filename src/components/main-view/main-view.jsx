@@ -1,28 +1,25 @@
 import {useState} from "react";
 import {MovieCard} from "../movie-card/movie-card";
 import {MovieView} from "../movie-view/movie-view";
+import { useState, useEffect } from "react";
 
 export const MainView = () => {
-    const [movies, setMovies] = useState([
-        {
-            id:1,
-            title: "The Departed",
-            director: "Martin Scorsce",
-            genre: "Thriller"
-        },
-        {
-            id:2,
-            title: "Grand Budapest Hotel",
-            director: "Wes Anderson",
-            genre: "Comedy"
-        },
-        {
-            id:3,
-            title: "GoodFellas",
-            director: "Martin Scorsce",
-            genre: "Drama"
-        },
-    ]);
+    const [movies, setMovies] = useState([]);
+
+    useEffect(() => {
+        fetch ("https://moviedbapi-2a92d1561762.herokuapp.com/")
+        .then((response) => response.json())
+        .then((data) => {
+            const moviesFromApi = data.docs.map((doc) => {
+                return {
+                    id: doc.key,
+                    title: doc.title,
+                    director: doc.director
+                };
+            });
+            setMovies(moviesFromApi)
+        })
+    })
 
     const [selectedMovie, setSelectedMovie] = useState(null);
     if (selectedMovie) {
