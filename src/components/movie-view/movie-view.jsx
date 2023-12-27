@@ -1,4 +1,9 @@
-export const MovieView = ({ movie, onBackClick }) => {
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+
+export const MovieView = ({ movies }) => {
+    const { movieId } = useParams();
+    const book = books.find((b) = b.id === bookId);
     return (
         <div>
             <div>
@@ -20,7 +25,9 @@ export const MovieView = ({ movie, onBackClick }) => {
             <span>{movie.genre}</span>
             </div>
             </div>
-            <button onClick={onBackClick}>Back</button>
+            <Link to={`/`}>
+            <button className="back-button">Back</button>
+            </Link>
         </div>
-    )
-}
+    );
+};
