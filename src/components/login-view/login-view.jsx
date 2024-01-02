@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export const LoginView = ({onLoggedIn}) => {
     const [username, setUsername] = useState("");
@@ -44,11 +46,11 @@ export const LoginView = ({onLoggedIn}) => {
                    required
                     />
           </Form.Group>
-          <Form.Group>
+          <Form.Group controlId="Password">
             <Form.Label>Password:</Form.Label>
             <Form.Control type="password"
                    value={password}
-                   oncChange={(e) => setPassword(e.target.value)}
+                   onChange={(e) => setPassword(e.target.value)}
                    required />
           </Form.Group>
           <Button variant="Primary" type="submit">
