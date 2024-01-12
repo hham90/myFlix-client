@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Row from "react-bootstrap/Container";
-import Col from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap";
-import Card from "react-bootstrap";
-import Form from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import {Card} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 
