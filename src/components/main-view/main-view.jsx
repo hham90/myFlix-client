@@ -8,16 +8,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {ProfileView} from "../profile-view/profile-view";
-import { useSelector, useDispatch} from "react-redux";
 import { setMovies }from "../../redux/reducers/movies";
 import {MoviesList} from "../movies-list/movies-list"
+import {store} from "../../redux/store";
+import { useSelector} from "react-redux";
 
 export const MainView = () =>
 {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
-    const [token, setToken] = useState(storedToken? storedToken : null)
-    // const [movies, setMovies] = useState([]);
+    const [token, setToken] = useState(storedToken? storedToken : null);
     const movies = useSelector((state) => state.movies.list);
     const [user, setUser] = useState(storedUser? storedUser : null);
 
@@ -29,15 +29,17 @@ export const MainView = () =>
         })
           .then((response) => response.json())
           .then((data) => {
-            const moviesFromApi = data.docs.map((doc) => {
+            const moviesFromApi = data.map((doc) => {
               return {
-                id: doc.key,
-                title: doc.title,
-                author: doc.author_name?.[0]
+                id: doc._id,
+                title: doc.Title,
+                author: doc.Director.Name
               };
             });
-            dispatchEvent(setMovies(moviesFromApi))
-          });
+            store.dispatch(setMovies(moviesFromApi))
+          }).catch((error) => {
+            console.log({error})
+          })
           // .then((movies) => {
           //   setMovies(movies);
 
@@ -50,6 +52,9 @@ export const MainView = () =>
           user={user}
           onLoggedOut={() => {
             setUser(null);
+            setToken(null);
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
           }}
           />
         <Row className="justify-content-md-center">

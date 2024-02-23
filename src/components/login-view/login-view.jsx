@@ -10,8 +10,8 @@ export const LoginView = ({onLoggedIn}) => {
         event.preventDefault();
 
         const data = {
-          access: username,
-          secret: password
+          Username: username,
+          Password: password
         };
 
         fetch("https://moviedbapi-2a92d1561762.herokuapp.com/login", {
@@ -42,7 +42,7 @@ export const LoginView = ({onLoggedIn}) => {
             <Form.Label>Username:</Form.Label>
             <Form.Control type="text"
                    value={username}
-                   onChange={(e) => setUsername(e.target.vaule)}
+                   onChange={(e) => setUsername(e.target.value)}
                    required
                     />
           </Form.Group>
