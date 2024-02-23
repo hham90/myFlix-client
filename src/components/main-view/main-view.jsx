@@ -9,7 +9,8 @@ import Col from "react-bootstrap/Col";
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {ProfileView} from "../profile-view/profile-view";
 import { useSelector, useDispatch} from "react-redux";
-import { setMovies }from "../../redux/reducers/movies"
+import { setMovies }from "../../redux/reducers/movies";
+import {MoviesList} from "../movies-list/movies-list"
 
 export const MainView = () =>
 {
