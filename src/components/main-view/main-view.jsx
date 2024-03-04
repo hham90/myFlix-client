@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import {MovieCard} from "../movie-card/movie-card";
 import {MovieView} from "../movie-view/movie-view";
 import {SignupView} from "../signup-view/signup-view";
 import {LoginView} from "../login-view/login-view";
@@ -20,6 +19,10 @@ export const MainView = () =>
     const [token, setToken] = useState(storedToken? storedToken : null);
     const movies = useSelector((state) => state.movies.list);
     const [user, setUser] = useState(storedUser? storedUser : null);
+    const setUserReal = (newUser) => {
+      localStorage.setItem("user", JSON.stringify(newUser));
+      setUser(newUser)
+    }
 
     useEffect(() => {
         if (!token) return;
@@ -36,6 +39,8 @@ export const MainView = () =>
                 director: doc.Director.Name,
                 description: doc.Description,
                 genre: doc.Genre,
+                image: doc.ImagePath,
+                actors: doc.Actors,
               };
             });
             store.dispatch(setMovies(moviesFromApi))
@@ -79,7 +84,7 @@ export const MainView = () =>
                     <Navigate to="/" />
                   ) : (
                     <Col md={5}>
-                      <LoginView onLoggedIn={(user) => setUser(user)} />
+                      <LoginView onLoggedIn={(user) => setUserReal(user)} />
                     </Col>
                   )}
                     </>
@@ -95,7 +100,7 @@ export const MainView = () =>
                     <Col>The list is empty!</Col>
                   ) : (
                     <Col md={8}>
-                      <MovieView />
+                      <MovieView user={user} token={token} setUser={setUserReal}/>
                     </Col>
                   )}
                 </>
@@ -112,7 +117,7 @@ export const MainView = () =>
                     <Col>The list is empty!</Col>
                   ) : (
                     <Col md={8}>
-                      <ProfileView user={user} token={token} setUser={setUser} movies={movies} />
+                      <ProfileView user={user} token={token} setUser={setUserReal} movies={movies} />
                     </Col>
                   )}
                 </>

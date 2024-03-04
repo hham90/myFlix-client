@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import {Card} from "react-bootstrap";
 import {Form} from "react-bootstrap";
-import { Link } from "react-router-dom";
+import {MovieCard} from "../movie-card/movie-card";
 
 
 export const ProfileView = ({ user, token, setUser, movies }) => {
@@ -14,7 +14,7 @@ export const ProfileView = ({ user, token, setUser, movies }) => {
     const [email, setEmail] = useState(user.Email);
     const [birthday, setBirthday] = useState(user.Birthday);
 
-    let favoriteMovies = movies.filter(m => user.FavoriteMovies.includes(m._id))
+    let favoriteMovies = movies.filter(m => user.FavoriteMovies.includes(m.id))
 
     const handleUpdate = (event) => {
         event.preventDefault();
@@ -26,7 +26,7 @@ export const ProfileView = ({ user, token, setUser, movies }) => {
             Birthday: birthday
         };
 
-        fetch("https://moviedbapi-2a92d1561762.herokuapp.com/users/${user.Username}", {
+        fetch(`https://moviedbapi-2a92d1561762.herokuapp.com/users/${user.Username}`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -45,7 +45,7 @@ export const ProfileView = ({ user, token, setUser, movies }) => {
         });
     }
         const handleDelete = () => {
-            fetch("https://moviedbapi-2a92d1561762.herokuapp.com/users/${user.Username}", {
+            fetch(`https://moviedbapi-2a92d1561762.herokuapp.com/users/${user.Username}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -117,6 +117,13 @@ export const ProfileView = ({ user, token, setUser, movies }) => {
                         <Button type="submit" onClick={handleUpdate}>Update</Button>
                     </Form>
                 </Col>
+            </Row>
+            <Row>
+                {favoriteMovies.map((movie) => (
+                <Col className="mb-4" key={movie.id} md={3}>
+                    <MovieCard movie={movie} />
+                 </Col>
+                ))}
             </Row>
         </Container>
     );
