@@ -7,8 +7,7 @@ import Row from "react-bootstrap/Row";
 
 export const MoviesList = () => {
     const movies = useSelector((state) => state.movies.list);
-    const filter = useSelector((state) =>
-    state.movies.filter).trim().toLowerCase();
+    const filter = useSelector((state) => state.movies.filter).trim().toLowerCase();
     const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(filter)
     );

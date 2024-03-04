@@ -11,7 +11,7 @@ import {ProfileView} from "../profile-view/profile-view";
 import { setMovies }from "../../redux/reducers/movies";
 import {MoviesList} from "../movies-list/movies-list"
 import {store} from "../../redux/store";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 export const MainView = () =>
 {
@@ -33,17 +33,15 @@ export const MainView = () =>
               return {
                 id: doc._id,
                 title: doc.Title,
-                author: doc.Director.Name
+                director: doc.Director.Name,
+                description: doc.Description,
+                genre: doc.Genre,
               };
             });
             store.dispatch(setMovies(moviesFromApi))
           }).catch((error) => {
             console.log({error})
           })
-          // .then((movies) => {
-          //   setMovies(movies);
-
-          // });
       }, [token]);
 
     return (
@@ -97,7 +95,7 @@ export const MainView = () =>
                     <Col>The list is empty!</Col>
                   ) : (
                     <Col md={8}>
-                      <MovieView /* movies={movies} */ />
+                      <MovieView />
                     </Col>
                   )}
                 </>
